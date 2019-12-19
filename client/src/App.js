@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AppNavbar from './components/AppNavbar';
 import JobList from './components/JobList';
@@ -19,14 +20,14 @@ const App = () => {
   const [searchValue, setSearchValue] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
+  const [pageNumber, setPageNumber] = useState(1);
 
   const generateURL = value => {
-    let url =
-      'https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?page=0';
+    let url = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?page=${pageNumber}`;
     if (value == '') {
       return url;
     } else {
-      return (url = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${value}&page=0`);
+      return (url = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${value}&page=1`);
     }
   };
 
@@ -38,7 +39,7 @@ const App = () => {
         setLoading(false);
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [pageNumber]);
 
   const onChangeHandler = e => {
     setSearchValue(e.target.value);
@@ -63,6 +64,12 @@ const App = () => {
     setCurrentPage(num);
   };
 
+  const newJobHandler = () => {
+    setPageNumber(pageNumber + 1);
+  };
+
+  console.log(pageNumber);
+
   return (
     <BrowserRouter>
       <div className='App'>
@@ -84,17 +91,22 @@ const App = () => {
                     onClickHandler={onClickHandler}
                   />
                   <JobList jobs={currentPosts} loading={loading} />
+                  <div className='footer-info-wrapper'>
+                    <Pagination
+                      postsPerPage={postsPerPage}
+                      totalPosts={jobs.length}
+                      paginate={paginate}
+                      currentPage={currentPage}
+                    />
+                    <Button variant='primary' onClick={newJobHandler}>
+                      Click Here for Newer Jobs
+                    </Button>
+                  </div>
                 </div>
               )}
             />
             <Route path='/:id' component={SingleJob} />
           </Switch>
-          <Pagination
-            postsPerPage={postsPerPage}
-            totalPosts={jobs.length}
-            paginate={paginate}
-            currentPage={currentPage}
-          />
         </div>
       </div>
     </BrowserRouter>

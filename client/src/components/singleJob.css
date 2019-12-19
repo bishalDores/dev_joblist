@@ -1,0 +1,11 @@
+.single_job_wrapper h1 a {
+  text-decoration: underline;
+  color: black;
+}
+.company_logo {
+  width: 150px;
+  margin: 20px auto;
+}
+.company_logo img {
+  width: 100%;
+}

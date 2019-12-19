@@ -2,7 +2,7 @@ import React from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Button, FormControl } from 'react-bootstrap';
 
-const Search = ({ onChangeHandler }) => {
+const Search = ({ onChangeHandler, onClickHandler }) => {
   return (
     <InputGroup className='mb-3'>
       <FormControl
@@ -12,7 +12,9 @@ const Search = ({ onChangeHandler }) => {
         onChange={onChangeHandler}
       />
       <InputGroup.Append>
-        <Button variant='outline-primary'>Button</Button>
+        <Button variant='outline-primary' onClick={onClickHandler}>
+          Submit
+        </Button>
       </InputGroup.Append>
     </InputGroup>
   );

@@ -32,6 +32,7 @@ const App = () => {
   };
 
   useEffect(() => {
+      setLoading(true);
     axios
       .get(generateURL(''))
       .then(res => {
@@ -46,6 +47,7 @@ const App = () => {
   };
 
   const onClickHandler = () => {
+      setLoading(true);
     axios
       .get(generateURL(searchValue))
       .then(res => {

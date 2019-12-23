@@ -7,6 +7,8 @@ import JobList from './components/JobList';
 import Search from './components/Search';
 import SingleJob from './components/SingleJob';
 import Pagination from './components/Pagination';
+import { Provider } from 'react-redux';
+import store from './store';
 import axios from 'axios';
 import './App.css';
 
@@ -32,7 +34,7 @@ const App = () => {
   };
 
   useEffect(() => {
-      setLoading(true);
+    setLoading(true);
     axios
       .get(generateURL(''))
       .then(res => {
@@ -47,7 +49,7 @@ const App = () => {
   };
 
   const onClickHandler = () => {
-      setLoading(true);
+    setLoading(true);
     axios
       .get(generateURL(searchValue))
       .then(res => {
@@ -73,45 +75,47 @@ const App = () => {
   console.log(pageNumber);
 
   return (
-    <BrowserRouter>
-      <div className='App'>
-        <AppNavbar />
-        <div className='container'>
-          <Switch>
-            <Route
-              path='/'
-              exact
-              render={props => (
-                <div>
-                  <h3
-                    className='mt-3 mb-3 text-center'
-                    style={contentHeadlineStyle}>
-                    Software Engineering Jobs
-                  </h3>
-                  <Search
-                    onChangeHandler={onChangeHandler}
-                    onClickHandler={onClickHandler}
-                  />
-                  <JobList jobs={currentPosts} loading={loading} />
-                  <div className='footer-info-wrapper'>
-                    <Pagination
-                      postsPerPage={postsPerPage}
-                      totalPosts={jobs.length}
-                      paginate={paginate}
-                      currentPage={currentPage}
+    <Provider store={store}>
+      <BrowserRouter>
+        <div className='App'>
+          <AppNavbar />
+          <div className='container'>
+            <Switch>
+              <Route
+                path='/'
+                exact
+                render={props => (
+                  <div>
+                    <h3
+                      className='mt-3 mb-3 text-center'
+                      style={contentHeadlineStyle}>
+                      Software Engineering Jobs
+                    </h3>
+                    <Search
+                      onChangeHandler={onChangeHandler}
+                      onClickHandler={onClickHandler}
                     />
-                    <Button variant='primary' onClick={newJobHandler}>
-                      Click Here for Newer Jobs
-                    </Button>
+                    <JobList jobs={currentPosts} loading={loading} />
+                    <div className='footer-info-wrapper'>
+                      <Pagination
+                        postsPerPage={postsPerPage}
+                        totalPosts={jobs.length}
+                        paginate={paginate}
+                        currentPage={currentPage}
+                      />
+                      <Button variant='primary' onClick={newJobHandler}>
+                        Click Here for Newer Jobs
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              )}
-            />
-            <Route path='/:id' component={SingleJob} />
-          </Switch>
+                )}
+              />
+              <Route path='/:id' component={SingleJob} />
+            </Switch>
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </Provider>
   );
 };
 

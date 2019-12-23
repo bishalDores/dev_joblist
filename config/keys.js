@@ -1,3 +1,0 @@
-module.exports = {
-    mongoURI : 'mongodb+srv://peter_91:7nuZcjKO5prbAXZT@cluster0-ulwgy.mongodb.net/dev_jobs?retryWrites=true&w=majority'
-};

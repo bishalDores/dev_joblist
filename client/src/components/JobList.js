@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
+import { connect } from 'react-redux';
 
-const JobList = ({ jobs, loading }) => {
+const JobList = ({ jobs, loading, authenticated }) => {
   return loading ? (
     <Spinner animation='border' />
   ) : (
@@ -18,17 +19,20 @@ const JobList = ({ jobs, loading }) => {
       </thead>
       <tbody>
         {jobs.map((job, id) => {
-          console.log(job);
           return (
             <tr key={id}>
               <td>{job.title}</td>
               <td>{job.company}</td>
               <td>{job.location}</td>
               <td>
-                <Link
-                  to={{ pathname: `/${job.id}`, state: { singleJob: job } }}>
-                  View Details
-                </Link>
+                {authenticated ? (
+                  <Link
+                    to={{ pathname: `/${job.id}`, state: { singleJob: job } }}>
+                    View Details
+                  </Link>
+                ) : (
+                  'login to view details'
+                )}
               </td>
             </tr>
           );
@@ -37,5 +41,7 @@ const JobList = ({ jobs, loading }) => {
     </Table>
   );
 };
-
-export default JobList;
+const mapStateToProps = state => ({
+  authenticated: state.auth.isAuthenticated
+});
+export default connect(mapStateToProps, null)(JobList);

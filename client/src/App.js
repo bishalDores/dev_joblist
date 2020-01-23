@@ -10,6 +10,7 @@ import Pagination from './components/Pagination';
 import { Provider } from 'react-redux';
 import store from './store';
 import axios from 'axios';
+import { loadUser } from '../src/actions/authActions';
 import './App.css';
 
 const contentHeadlineStyle = {
@@ -44,6 +45,10 @@ const App = () => {
       .catch(err => console.log(err));
   }, [pageNumber]);
 
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
   const onChangeHandler = e => {
     setSearchValue(e.target.value);
   };
@@ -71,8 +76,6 @@ const App = () => {
   const newJobHandler = () => {
     setPageNumber(pageNumber + 1);
   };
-
-  console.log(pageNumber);
 
   return (
     <Provider store={store}>

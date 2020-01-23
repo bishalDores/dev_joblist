@@ -5,7 +5,6 @@ import './singleJob.css';
 
 const SingleJob = props => {
   const { singleJob } = props.location.state;
-  console.log(singleJob);
   return (
     <div className='single_job_wrapper'>
       <div className='company_logo'>

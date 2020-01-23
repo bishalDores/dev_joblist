@@ -6,8 +6,8 @@ const Search = ({ onChangeHandler, onClickHandler }) => {
   return (
     <InputGroup className='mb-3'>
       <FormControl
-        placeholder='Search by programming languages or location...'
-        aria-label='Search by programming languages or location...'
+        placeholder='Search by programming languages...'
+        aria-label='Search by programming languages...'
         aria-describedby='basic-addon2'
         onChange={onChangeHandler}
       />

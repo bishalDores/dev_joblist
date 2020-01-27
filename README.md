@@ -17,5 +17,9 @@ This app is built with the help of [github jobs api](https://jobs.github.com/api
 ## How to run:
 
 ```
+npm install
+cd client
+npm install
+cd ..
 npm run dev
 ```
